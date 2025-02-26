@@ -1,0 +1,15 @@
+api-server/
+│── node_modules/     # Dependencias de Node.js
+│── database/         # Carpeta para la base de datos
+│   ├── database.js   # Conexión y configuración de la base de datos
+│── routes/           # Carpeta con las rutas de la API
+│   ├── users.js      # Rutas para manejar los usuarios
+│── controllers/      # Lógica de negocio (controladores)
+│   ├── usersController.js  # Funciones para manejar usuarios
+│── public/           # Carpeta para la página web
+│   ├── index.html    # Interfaz gráfica con botones
+│── server.js         # Archivo principal del servidor
+│── .env              # Archivo para variables de entorno
+│── package.json      # Configuración del proyecto Node.js
+│── README.md         # Explicación del proyecto
+

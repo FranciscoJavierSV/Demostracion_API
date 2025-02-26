@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .user-list, .actions {
+            margin: 20px;
+        }
+        .actions input {
+            margin: 5px;
+        }
+        .user-list button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Usuarios</h1>
+        <div class="actions">
+            <button onclick="getUsers()">GET</button>
+            <div>
+                <input type="text" id="userId" placeholder="ID de usuario">
+                <button onclick="deleteUser()">DELETE</button>
+            </div>
+            <div>
+                <input type="text" id="username" placeholder="Nombre del usuario">
+                <button onclick="addUser()">POST</button>
+            </div>
+        </div>
+        <ul id="userList"></ul>
+    </div>
+
+    <script>
+        const API_URL = `${window.location.origin}/api/users`;
+    
+        async function getUsers() {
+            const response = await fetch(API_URL);
+            const users = await response.json();
+            const list = document.getElementById('userList');
+            list.innerHTML = users.map(user => 
+                `<li>${user.id} - ${user.name} <button onclick="deleteUser(${user.id})">Eliminar</button></li>`
+            ).join('');
+        }
+    
+        async function addUser() {
+            const name = document.getElementById('username').value;
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+            getUsers();
+        }
+    
+        async function deleteUser(id) {
+            const userId = document.getElementById('userId').value;
+            await fetch(`${API_URL}/${userId}`, { method: 'DELETE' });
+            getUsers();
+        }
+    
+        getUsers();
+    </script>    
+</body>
+</html>
